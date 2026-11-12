@@ -1,4 +1,3 @@
-
 /* =========================================================
    A MAGICAL WORLD OF ANNI ❤️ — INTERACTIVE ENGINE
 ========================================================= */
@@ -141,7 +140,6 @@ function initCinematicIntro() {
   const mainWorld = document.getElementById('mainWorld');
   const topNav = document.getElementById('topNav');
 
-  // Timer-based reveal taaki GitHub par preloader kabhi na atke
   setTimeout(() => {
     if (preloader) preloader.classList.add('fade-out');
     setTimeout(() => subtitle.classList.add('visible'), 400);
@@ -312,7 +310,7 @@ function initParallax() {
 }
 
 /* =========================================================
-   7. PREMIUM PHOTO GALLERY + LIGHTBOX
+   7. PREMIUM PHOTO GALLERY + LIGHTBOX (DIRECT ROOT FILES)
 ========================================================= */
 function initPhotoGallery() {
   const grid = document.getElementById('galleryGrid');
@@ -323,13 +321,14 @@ function initPhotoGallery() {
   const prevBtn = document.getElementById('lightboxPrev');
   const nextBtn = document.getElementById('lightboxNext');
 
+  // Seedha root folder wali Photo1.jpg se Photo6.jpg uthayega
   const memories = [
-    { src: 'assets/images/photo1.jpg', caption: 'A Smile That Lights Up Every Room' },
-    { src: 'assets/images/photo2.jpg', caption: 'Effortless Grace & Stardust' },
-    { src: 'assets/images/photo3.jpg', caption: 'Golden Hour Magic' },
-    { src: 'assets/images/photo4.jpg', caption: 'Pure Joy in Every Moment' },
-    { src: 'assets/images/photo5.jpg', caption: 'Unforgettable Radiance' },
-    { src: 'assets/images/photo6.jpg', caption: 'Forever One of a Kind' }
+    { src: 'Photo1.jpg', caption: 'A Smile That Lights Up Every Room' },
+    { src: 'Photo2.jpg', caption: 'Effortless Grace & Stardust' },
+    { src: 'Photo3.jpg', caption: 'Golden Hour Magic' },
+    { src: 'Photo4.jpg', caption: 'Pure Joy in Every Moment' },
+    { src: 'Photo5.jpg', caption: 'Unforgettable Radiance' },
+    { src: 'Photo6.jpg', caption: 'Forever One of a Kind' }
   ];
 
   function createFallbackArt(index) {
@@ -347,7 +346,7 @@ function initPhotoGallery() {
         <circle cx="400" cy="420" r="120" fill="none" stroke="#ff5fa2" stroke-opacity="0.45" stroke-width="1.5"/>
         <text x="400" y="415" text-anchor="middle" fill="#f4c2c2" font-family="Georgia, serif" font-size="42" letter-spacing="8">ANNI</text>
         <text x="400" y="465" text-anchor="middle" fill="#ffb6d9" font-family="sans-serif" font-size="18" letter-spacing="4">MEMORY 0${index + 1}</text>
-        <text x="400" y="880" text-anchor="middle" fill="#ffffff" fill-opacity="0.55" font-family="sans-serif" font-size="16">Upload assets/images/photo${index + 1}.jpg</text>
+        <text x="400" y="880" text-anchor="middle" fill="#ffffff" fill-opacity="0.55" font-family="sans-serif" font-size="16">Upload Photo${index + 1}.jpg in root folder</text>
       </svg>`;
     return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
   }
