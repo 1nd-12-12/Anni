@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Magical World of Anni ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Custom Cursor (Desktop) -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Preloader -->
+  <div id="preloader" class="preloader">
+    <div class="loader-orb"></div>
+    <p class="loader-text">Preparing Magic for Anni...</p>
+  </div>
+
+  <!-- Global Starfield & Particle Canvas -->
+  <canvas id="universeCanvas"></canvas>
+
+  <!-- Floating Audio Controller (Auto-shown only if assets/music/background.mp3 exists) -->
+  <audio id="bgMusic" loop preload="metadata">
+    <source src="assets/music/background.mp3" type="audio/mpeg" />
+  </audio>
+  <button id="musicToggle" class="music-btn hidden" aria-label="Toggle Background Music">
+    <span class="music-bars" id="musicBars">
+      <i></i><i></i><i></i><i></i>
+    </span>
+    <span id="musicLabel">Play Music</span>
+  </button>
+
+  <!-- Minimal Floating Navigation (Appears after intro) -->
+  <nav id="topNav" class="glass-nav hidden">
+    <a href="#home">Home</a>
+    <a href="#gallery">Memories</a>
+    <a href="#message">Words</a>
+    <a href="#heart-exp">Heartbeat</a>
+    <a href="#surprise">Surprise</a>
+    <a href="#finale">Finale</a>
+  </nav>
+
+  <!-- =========================================================
+       1. CINEMATIC INTRO OVERLAY
+  ========================================================== -->
+  <section id="cinematicIntro" class="intro-screen">
+    <div class="intro-vignette"></div>
+    <div class="intro-content">
+      <p id="introSubtitle" class="intro-subtitle">A STORY WRITTEN FOR SOMEONE SPECIAL...</p>
+      <div id="introTitleWrap" class="intro-title-wrap">
+        <h1 class="anni-3d-title" data-text="ANNI">ANNI</h1>
+        <div class="title-aura"></div>
+      </div>
+      <button id="startJourneyBtn" class="cta-btn intro-btn">
+        <span>START THE JOURNEY ❤️</span>
+        <div class="btn-shine"></div>
+      </button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       MAIN JOURNEY CONTENT
+  ========================================================== -->
+  <main id="mainWorld" class="main-world locked">
+
+    <!-- 2. MAGICAL HOME SCREEN -->
+    <section id="home" class="section hero-section">
+      <canvas id="magicalAmbientCanvas" class="ambient-layer"></canvas>
+      <div class="hero-glow-orb orb-1" data-parallax="0.04"></div>
+      <div class="hero-glow-orb orb-2" data-parallax="-0.05"></div>
+
+      <div class="hero-container" data-parallax="0.02">
+        <span class="eyebrow-tag">✦ CHAPTER I · THE BEGINNING ✦</span>
+        <h2 class="hero-heading">Welcome To Anni's<br /><span class="rose-gradient">Magical World</span></h2>
+        <p class="hero-sub">
+          A universe crafted out of stardust, gentle light, and every quiet reason you make life brighter.
+        </p>
+        <div class="scroll-indicator">
+          <span>Scroll Gently</span>
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PHOTO GALLERY -->
+    <section id="gallery" class="section gallery-section">
+      <div class="section-header reveal">
+        <span class="eyebrow-tag">✦ CHAPTER II · CAPTURED LIGHT ✦</span>
+        <h2 class="section-title">Moments Framed in Gold</h2>
+        <p class="section-desc">Click any frame to step inside the memory.</p>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Populated smoothly via script.js with automatic elegant fallback -->
+      </div>
+    </section>
+
+    <!-- Full-Screen Lightbox Modal -->
+    <div id="lightboxModal" class="lightbox hidden" role="dialog" aria-modal="true">
+      <button id="lightboxClose" class="lightbox-close" aria-label="Close">&times;</button>
+      <button id="lightboxPrev" class="lightbox-nav prev" aria-label="Previous">&#10094;</button>
+      <div class="lightbox-stage">
+        <img id="lightboxImg" src="" alt="Anni Memory" />
+        <p id="lightboxCaption" class="lightbox-caption"></p>
+      </div>
+      <button id="lightboxNext" class="lightbox-nav next" aria-label="Next">&#10095;</button>
+    </div>
+
+    <!-- 4. SPECIAL MESSAGE -->
+    <section id="message" class="section message-section">
+      <div class="glass-card message-card reveal">
+        <span class="eyebrow-tag">✦ CHAPTER III · WHISPERS OF THE HEART ✦</span>
+        <div class="typewriter-container" id="typewriterContainer">
+          <p class="typed-line" data-text="You are one of a kind ❤️"></p>
+          <p class="typed-line" data-text="Some people make the world beautiful just by existing."></p>
+          <p class="typed-line" data-text="This little world is made especially for you."></p>
+        </div>
+        <button id="replayTypingBtn" class="ghost-btn">Replay Words ↻</button>
+      </div>
+    </section>
+
+    <!-- 5. HEART EXPERIENCE -->
+    <section id="heart-exp" class="section heart-section">
+      <canvas id="heartBurstCanvas" class="burst-canvas"></canvas>
+      <div class="section-header reveal">
+        <span class="eyebrow-tag">✦ CHAPTER IV · PURE RADIANCE ✦</span>
+        <h2 class="section-title">Touch the Glowing Heart</h2>
+        <p class="section-desc">Tap the heart below to release a shower of magic.</p>
+      </div>
+
+      <div class="heart-stage reveal">
+        <button id="interactiveHeartBtn" class="heart-3d-wrapper" aria-label="Glowing 3D Heart">
+          <div class="heart-pulse-ring"></div>
+          <div class="heart-pulse-ring delay"></div>
+          <svg class="heart-3d-svg" viewBox="0 0 200 185" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="heart3DGrad" cx="35%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="22%" stop-color="#ffb6d9" />
+                <stop offset="58%" stop-color="#e04f8a" />
+                <stop offset="100%" stop-color="#4b0d3a" />
+              </radialGradient>
+              <filter id="heartGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <path
+              filter="url(#heartGlow)"
+              fill="url(#heart3DGrad)"
+              d="M100 172 C100 172 14 116 14 56 C14 27 37 8 63 8 C80 8 94 17 100 30 C106 17 120 8 137 8 C163 8 186 27 186 56 C186 116 100 172 100 172 Z"
+            />
+          </svg>
+        </button>
+
+        <div id="heartRevealBanner" class="heart-special-banner">
+          <h3>Anni, You Are Special ❤️</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SURPRISE SECTION -->
+    <section id="surprise" class="section surprise-section">
+      <div class="section-header reveal">
+        <span class="eyebrow-tag">✦ CHAPTER V · A HIDDEN KEEPSAKE ✦</span>
+        <h2 class="section-title">A Secret Awaits Inside</h2>
+      </div>
+
+      <div class="surprise-stage reveal">
+        <!-- 3D Glowing Gift Box -->
+        <div id="giftBoxContainer" class="gift-box-container" role="button" tabindex="0" aria-label="Open Gift Box">
+          <div class="gift-aura"></div>
+          <div class="gift-box">
+            <div class="gift-lid">
+              <div class="gift-bow-left"></div>
+              <div class="gift-bow-right"></div>
+              <div class="gift-ribbon-h"></div>
+            </div>
+            <div class="gift-body">
+              <div class="gift-ribbon-v"></div>
+            </div>
+          </div>
+          <p class="gift-hint">Tap the glowing box to open ✨</p>
+        </div>
+
+        <!-- Revealed Surprise Card -->
+        <div id="surpriseRevealCard" class="glass-card surprise-card hidden">
+          <div class="surprise-badge">✨ FOR ANNI ✨</div>
+          <h3 id="surpriseSlideTitle">A Little Reminder</h3>
+          <p id="surpriseSlideText">
+            No matter where life takes you, never forget how rare your warmth, your smile, and your spirit truly are.
+          </p>
+          <div class="surprise-controls">
+            <span id="surpriseStepIndicator" class="step-dots">1 / 3</span>
+            <button id="surpriseNextBtn" class="cta-btn small-btn">
+              <span>Next ✨</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. FINAL CINEMATIC SCENE -->
+    <section id="finale" class="section finale-section">
+      <canvas id="finaleExplosionCanvas" class="burst-canvas"></canvas>
+      <div class="moon-backdrop">
+        <div class="cinematic-moon"></div>
+        <div class="moon-reflection"></div>
+      </div>
+
+      <div class="finale-content reveal" id="finaleContent">
+        <p class="finale-line-1">Every beautiful story deserves a beautiful name...</p>
+        <h2 class="finale-line-2">AND THAT NAME IS <span>ANNI ❤️</span></h2>
+        <button id="finaleCelebrateBtn" class="cta-btn finale-btn">
+          <span>Celebrate Anni ✨</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
