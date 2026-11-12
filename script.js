@@ -1,3 +1,4 @@
+
 /* =========================================================
    A MAGICAL WORLD OF ANNI ❤️ — INTERACTIVE ENGINE
 ========================================================= */
@@ -129,7 +130,7 @@ function initUniverseStarfield() {
 }
 
 /* =========================================================
-   3. CINEMATIC INTRO & PRELOADER SEQUENCE
+   3. CINEMATIC INTRO & PRELOADER SEQUENCE (FIXED)
 ========================================================= */
 function initCinematicIntro() {
   const preloader = document.getElementById('preloader');
@@ -140,22 +141,19 @@ function initCinematicIntro() {
   const mainWorld = document.getElementById('mainWorld');
   const topNav = document.getElementById('topNav');
 
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      preloader.classList.add('fade-out');
-      // Choreographed movie opening sequence
-      setTimeout(() => subtitle.classList.add('visible'), 500);
-      setTimeout(() => titleWrap.classList.add('visible'), 2100);
-      setTimeout(() => startBtn.classList.add('visible'), 3600);
-    }, 700);
-  });
+  // Timer-based reveal taaki GitHub par preloader kabhi na atke
+  setTimeout(() => {
+    if (preloader) preloader.classList.add('fade-out');
+    setTimeout(() => subtitle.classList.add('visible'), 400);
+    setTimeout(() => titleWrap.classList.add('visible'), 1600);
+    setTimeout(() => startBtn.classList.add('visible'), 2800);
+  }, 800);
 
   startBtn.addEventListener('click', () => {
     introScreen.classList.add('dismissed');
     mainWorld.classList.remove('locked');
     topNav.classList.remove('hidden');
 
-    // Attempt to start background music if audio file exists
     const bgMusic = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicToggle');
     const musicBars = document.getElementById('musicBars');
@@ -166,15 +164,13 @@ function initCinematicIntro() {
       bgMusic.play().then(() => {
         musicBars.classList.add('playing');
         musicLabel.textContent = 'Pause Music';
-      }).catch(() => {
-        // User can tap Play manually if needed
-      });
+      }).catch(() => {});
     }
   });
 }
 
 /* =========================================================
-   4. BACKGROUND MUSIC CONTROLLER (ONLY VISIBLE IF FILE EXISTS)
+   4. BACKGROUND MUSIC CONTROLLER
 ========================================================= */
 function initMusicController() {
   const bgMusic = document.getElementById('bgMusic');
@@ -184,7 +180,6 @@ function initMusicController() {
 
   if (!bgMusic || !musicBtn) return;
 
-  // Reveal button ONLY if assets/music/background.mp3 loads valid metadata
   bgMusic.addEventListener('loadedmetadata', () => {
     if (bgMusic.duration > 0) {
       musicBtn.classList.remove('hidden');
@@ -205,7 +200,7 @@ function initMusicController() {
 }
 
 /* =========================================================
-   5. MAGICAL HOME AMBIENT LAYER (HEARTS, BUTTERFLIES, PETALS)
+   5. MAGICAL HOME AMBIENT LAYER
 ========================================================= */
 function initMagicalAmbientLayer() {
   const canvas = document.getElementById('magicalAmbientCanvas');
@@ -328,7 +323,6 @@ function initPhotoGallery() {
   const prevBtn = document.getElementById('lightboxPrev');
   const nextBtn = document.getElementById('lightboxNext');
 
-  // Add or edit photos in assets/images/
   const memories = [
     { src: 'assets/images/photo1.jpg', caption: 'A Smile That Lights Up Every Room' },
     { src: 'assets/images/photo2.jpg', caption: 'Effortless Grace & Stardust' },
@@ -338,8 +332,7 @@ function initPhotoGallery() {
     { src: 'assets/images/photo6.jpg', caption: 'Forever One of a Kind' }
   ];
 
-  // Generates a bespoke glowing artistic card if owner hasn't uploaded a photo yet
-  function createFallbackArt(index, title) {
+  function createFallbackArt(index) {
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
         <defs>
@@ -363,7 +356,7 @@ function initPhotoGallery() {
   const resolvedSources = [];
 
   memories.forEach((item, idx) => {
-    const fallback = createFallbackArt(idx, item.caption);
+    const fallback = createFallbackArt(idx);
     resolvedSources[idx] = item.src;
 
     const card = document.createElement('div');
@@ -433,13 +426,6 @@ function initPhotoGallery() {
     currentIndex = (currentIndex + 1) % memories.length;
     updateLightbox();
   });
-
-  document.addEventListener('keydown', (e) => {
-    if (modal.classList.contains('hidden')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') prevBtn.click();
-    if (e.key === 'ArrowRight') nextBtn.click();
-  });
 }
 
 /* =========================================================
@@ -459,7 +445,6 @@ function initScrollRevealAndTyping() {
 
   document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-  // Typing animation for Special Message section
   const container = document.getElementById('typewriterContainer');
   const lines = Array.from(container.querySelectorAll('.typed-line'));
   const replayBtn = document.getElementById('replayTypingBtn');
@@ -502,7 +487,7 @@ function initScrollRevealAndTyping() {
 }
 
 /* =========================================================
-   9. INTERACTIVE 3D HEART EXPERIENCE (HUNDREDS OF HEARTS)
+   9. INTERACTIVE 3D HEART EXPERIENCE
 ========================================================= */
 function initHeartExperience() {
   const heartBtn = document.getElementById('interactiveHeartBtn');
@@ -582,7 +567,7 @@ function initHeartExperience() {
 
   heartBtn.addEventListener('click', () => {
     heartBtn.classList.remove('beat');
-    void heartBtn.offsetWidth; // trigger reflow
+    void heartBtn.offsetWidth;
     heartBtn.classList.add('beat');
 
     const rect = heartBtn.getBoundingClientRect();
@@ -602,4 +587,142 @@ function initSurpriseBox() {
   const boxContainer = document.getElementById('giftBoxContainer');
   const revealCard = document.getElementById('surpriseRevealCard');
   const titleEl = document.getElementById('surpriseSlideTitle');
-  c
+  const textEl = document.getElementById('surpriseSlideText');
+  const stepEl = document.getElementById('surpriseStepIndicator');
+  const nextBtn = document.getElementById('surpriseNextBtn');
+
+  const surprises = [
+    {
+      title: 'A Little Reminder ✨',
+      text: 'No matter where life takes you, never forget how rare your warmth, your smile, and your spirit truly are.'
+    },
+    {
+      title: 'Why You Shine 🌙',
+      text: 'In a world that moves too fast, your presence feels like starlight—calm, effortless, and impossible to forget.'
+    },
+    {
+      title: 'Always Rooted For ❤️',
+      text: 'May every dream you whisper to the night sky find its way straight into your hands, Anni.'
+    }
+  ];
+
+  let slideIdx = 0;
+
+  function openGift() {
+    if (boxContainer.classList.contains('opening')) return;
+    boxContainer.classList.add('opening');
+
+    setTimeout(() => {
+      boxContainer.classList.add('hidden');
+      revealCard.classList.remove('hidden');
+    }, 650);
+  }
+
+  boxContainer.addEventListener('click', openGift);
+  nextBtn.addEventListener('click', () => {
+    slideIdx = (slideIdx + 1) % surprises.length;
+    titleEl.style.opacity = '0';
+    textEl.style.opacity = '0';
+    titleEl.style.transform = 'translateY(8px)';
+    textEl.style.transform = 'translateY(8px)';
+
+    setTimeout(() => {
+      titleEl.textContent = surprises[slideIdx].title;
+      textEl.textContent = surprises[slideIdx].text;
+      stepEl.textContent = `${slideIdx + 1} / ${surprises.length}`;
+      titleEl.style.opacity = '1';
+      textEl.style.opacity = '1';
+      titleEl.style.transform = 'translateY(0)';
+      textEl.style.transform = 'translateY(0)';
+    }, 260);
+  });
+}
+
+/* =========================================================
+   11. FINAL CINEMATIC SCENE
+========================================================= */
+function initFinaleScene() {
+  const section = document.getElementById('finale');
+  const celebrateBtn = document.getElementById('finaleCelebrateBtn');
+  const canvas = document.getElementById('finaleExplosionCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let w, h;
+  function resize() {
+    w = canvas.width = section.offsetWidth;
+    h = canvas.height = section.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let fireworks = [];
+  const palette = ['#ff5fa2', '#ffb6d9', '#f4c2c2', '#ffffff', '#ff85c0', '#c77dff'];
+
+  function launchHeartExplosion(x, y, count = 130) {
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.2;
+      const speed = Math.random() * 8 + 3;
+      fireworks.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: Math.random() * 8 + 4,
+        color: palette[Math.floor(Math.random() * palette.length)],
+        alpha: 1,
+        decay: Math.random() * 0.01 + 0.006,
+        gravity: 0.045
+      });
+    }
+  }
+
+  function renderFinaleCanvas() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = fireworks.length - 1; i >= 0; i--) {
+      const f = fireworks[i];
+      f.x += f.vx;
+      f.y += f.vy;
+      f.vy += f.gravity;
+      f.vx *= 0.985;
+      f.alpha -= f.decay;
+
+      if (f.alpha <= 0) {
+        fireworks.splice(i, 1);
+      } else {
+        ctx.save();
+        ctx.translate(f.x, f.y);
+        ctx.globalAlpha = Math.max(0, f.alpha);
+        ctx.fillStyle = f.color;
+        ctx.shadowBlur = 14;
+        ctx.shadowColor = f.color;
+        const s = f.size * 0.65;
+        ctx.beginPath();
+        ctx.moveTo(0, s * 0.3);
+        ctx.bezierCurveTo(0, 0, -s, 0, -s, s * 0.45);
+        ctx.bezierCurveTo(-s, s * 0.85, 0, s * 1.15, 0, s * 1.35);
+        ctx.bezierCurveTo(0, s * 1.15, s, s * 0.85, s, s * 0.45);
+        ctx.bezierCurveTo(s, 0, 0, 0, 0, s * 0.3);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    requestAnimationFrame(renderFinaleCanvas);
+  }
+  renderFinaleCanvas();
+
+  let autoTriggered = false;
+  const finaleObserver = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && !autoTriggered) {
+        autoTriggered = true;
+        setTimeout(() => launchHeartExplosion(w * 0.5, h * 0.42, 150), 400);
+      }
+    },
+    { threshold: 0.45 }
+  );
+  finaleObserver.observe(section);
+
+  celebrateBtn.addEventListener('click', () => {
+    launchHeartExplosion(w * 0.5, h * 0.45, 180);
+  });
+}
